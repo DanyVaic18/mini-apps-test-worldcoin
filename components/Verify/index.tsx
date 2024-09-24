@@ -21,11 +21,14 @@ const verifyPayload: VerifyCommandInput = {
 };
 
 const triggerVerify = () => {
+  console.log(MiniKit.isInstalled());
   MiniKit.commands.verify(verifyPayload);
 };
 
 export const VerifyBlock = () => {
+
   useEffect(() => {
+
     if (!MiniKit.isInstalled()) {
       return;
     }
