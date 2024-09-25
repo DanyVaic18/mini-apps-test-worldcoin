@@ -4,7 +4,6 @@ import {
   ResponseEvent,
   VerificationLevel,
   MiniAppVerifyActionPayload,
-  ISuccessResult,
 } from "@worldcoin/minikit-js";
 import { useEffect } from "react";
 
@@ -15,18 +14,19 @@ export type VerifyCommandInput = {
 };
 
 const verifyPayload: VerifyCommandInput = {
-  action: "test-action", // This is your action ID from the Developer Portal
+  action: "mini-apptest-salpicon-jackpot", // This is your action ID from the Developer Portal
   signal: "",
   verification_level: VerificationLevel.Orb, // Orb | Device
-};
+}; 
 
 const triggerVerify = () => {
   console.log(MiniKit.isInstalled());
-  MiniKit.commands.verify(verifyPayload);
+  const payload = MiniKit.commands.verify(verifyPayload);
+  MiniKit.commands.closeWebview
+  console.log(payload);
 };
 
 export const VerifyBlock = () => {
-
   useEffect(() => {
 
     if (!MiniKit.isInstalled()) {
@@ -47,7 +47,7 @@ export const VerifyBlock = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            payload: response as ISuccessResult, // Parses only the fields we need to verify
+            payload: response, // Parses only the fields we need to verify
             action: verifyPayload.action,
             signal: verifyPayload.signal, // Optional
           }),

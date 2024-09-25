@@ -1,7 +1,9 @@
+
 import { Navbar } from "@/components/Layout/Navbar.tsx";
 import { PayBlock } from "@/components/Pay";
 import { SignIn } from "@/components/SignIn";
 import { VerifyBlock } from "@/components/Verify";
+import dynamic from "next/dynamic";
 
 export default function Home() {
   return (
