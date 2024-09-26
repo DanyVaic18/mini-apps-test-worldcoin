@@ -10,8 +10,7 @@
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.1.0",
-    "@worldcoin/idkit": "^1.3.0",
-    "@worldcoin/minikit-js": "^0.0.27-internal-alpha",
+    "@worldcoin/minikit-js": "^0.0.31-internal-alpha",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "eruda": "^3.2.3",

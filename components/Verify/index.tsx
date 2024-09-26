@@ -14,21 +14,52 @@ export type VerifyCommandInput = {
 };
 
 const verifyPayload: VerifyCommandInput = {
-  action: "mini-apptest-salpicon-jackpot", // This is your action ID from the Developer Portal
-  signal: "",
+  action: "app_staging_5a45208647efcc469f25d8f6c8a94b70", // This is your action ID from the Developer Portal
+  signal: "mini-apptest-salpicon-jackpot",
   verification_level: VerificationLevel.Orb, // Orb | Device
-}; 
+};
 
-const triggerVerify = () => {
-  console.log(MiniKit.isInstalled());
+const triggerVerify = async () => {
+  
   const payload = MiniKit.commands.verify(verifyPayload);
-  MiniKit.commands.closeWebview
-  console.log(payload);
+  console.log(payload, MiniKit.isInstalled());
+  try {
+    MiniKit.subscribe(
+      ResponseEvent.MiniAppVerifyAction,
+      async (response: MiniAppVerifyActionPayload) => {
+        console.log(response);
+        if (response.status === "error") {
+          return console.log("Error payload", response);
+        }
+
+        // Verify the proof in the backend
+        const verifyResponse = await fetch("/api/verify", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            payload: response, // Parses only the fields we need to verify
+            action: verifyPayload.action,
+            signal: verifyPayload.signal, // Optional
+          }),
+        });
+
+        // TODO: Handle Success!
+        const verifyResponseJson = await verifyResponse.json();
+        if (verifyResponseJson.status === 200) {
+          console.log("Verification success!");
+        } 
+      }
+    );
+
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const VerifyBlock = () => {
   useEffect(() => {
-
     if (!MiniKit.isInstalled()) {
       return;
     }
