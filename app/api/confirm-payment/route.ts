@@ -1,9 +1,8 @@
-import { MiniAppPaymentSuccessPayload } from "@worldcoin/minikit-js";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 interface IRequestPayload {
-  payload: MiniAppPaymentSuccessPayload;
+  payload:  any //MiniAppPaymentSuccessPayload;
 }
 
 export async function POST(req: NextRequest) {
